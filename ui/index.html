@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <title>Python → JS</title>
+</head>
+<body>
+  <h1>Python → JavaScript</h1>
+  <div id="status">Status: (leer)</div>
+
+  <script>
+    // Diese Funktion ruft Python später auf:
+    window.setStatus = (text) => {
+      document.getElementById("status").textContent = "Status: " + text;
+      return "JS hat gesetzt: " + text;   // kann an Python zurückgegeben werden
+    };
+  </script>
+</body>
+</html>
