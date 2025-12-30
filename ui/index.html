@@ -8,12 +8,11 @@
   <h1>Python → JavaScript</h1>
   <div id="status">Status: (leer)</div>
 
+  <button onclick="window.pywebview.api.printit()">printit()</button>
+
   <script>
-    // Diese Funktion ruft Python später auf:
-    window.setStatus = (text) => {
-      document.getElementById("status").textContent = "Status: " + text;
-      return "JS hat gesetzt: " + text;   // kann an Python zurückgegeben werden
-    };
+  
   </script>
+
 </body>
 </html>
