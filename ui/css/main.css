@@ -1,5 +1,15 @@
+body {
+  height: 100%;
+  font-family: "system-ui", sans-serif;
+}
+
 h1 {
-  color: red;
+  color: green;
+}
+
+footer {
+  position: absolute;
+  bottom: 0px;
 }
 
 /*# sourceMappingURL=main.css.map */

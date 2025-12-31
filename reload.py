@@ -6,10 +6,31 @@ import webview
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
+import sqlite3
+
+DB_PATH = "mydatabase.sqlite"
+
 UI_DIR = Path(__file__).resolve().parent / "ui"
 INDEX = (UI_DIR / "index.html").resolve()
 
 WATCH_EXT = {".html", ".css", ".js"}
+
+class Api:
+    def get_users(self):
+        with sqlite3.connect(DB_PATH) as con:
+            con.row_factory = sqlite3.Row
+            cur = con.cursor()
+
+            cur.execute("""
+                SELECT id, name, email
+                FROM users
+                ORDER BY id DESC
+                LIMIT 100
+            """)
+            rows = cur.fetchall()
+
+        # Row -> dict, damit JS ein Array von Objekten bekommt
+        return [dict(r) for r in rows]
 
 class ReloadHandler(FileSystemEventHandler):
     def __init__(self, window):
@@ -43,7 +64,14 @@ def start_watcher(window):
     print("Watching:", UI_DIR)
 
 def main():
-    window = webview.create_window("Dev Reload", url=str(INDEX), width=1200, height=800)
+    api = Api()
+    window = webview.create_window(
+        "Dev Reload", 
+        url=str(INDEX), 
+        width=1200, 
+        height=800,
+        js_api = api
+    )
 
     def after_start():
         threading.Thread(target=start_watcher, args=(window,), daemon=True).start()
